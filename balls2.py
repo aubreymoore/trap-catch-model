@@ -1,3 +1,5 @@
+# In this version I will try to implement Source and Particle as sprites
+
 import pygame
 import random
 from icecream import ic
@@ -17,7 +19,41 @@ GIF_PATH = 'output.gif'
 source_list = []
 particle_list = []
 
-class Source:
+class Source(pygame.sprite.Sprite):
+    def __init__(self, x, y, width, height, color=BLACK, radius=5):
+        super().__init__()
+
+
+
+
+        
+        self.image = pygame.Surface([radius * 2, radius * 2])
+        self.image.fill(BACKGROUND)
+        pygame.draw.circle(
+            self.image, color, (radius, radius), radius
+        )
+
+        self.rect = self.image.get_rect()
+        self.pos = np.array([x, y], dtype=np.float64)
+        self.vel = np.asarray(velocity, dtype=np.float64)
+
+        self.killswitch_on = False
+        self.recovered = False
+        self.randomize = randomize
+
+        self.WIDTH = width
+        self.HEIGHT = height
+
+
+
+
+
+
+
+
+
+
+
 
     def __init__(self, x_pos, y_pos, release_rate, radius, color):
         self.x_pos = x_pos
@@ -51,28 +87,26 @@ class Particle:
         self.y_pos += Y_WINDSPEED + y_dispersal
         self.x_pos += X_WINDSPEED + x_dispersal
 
+"""
+PygameRecord - A utility for recording Pygame screens as GIFS.
 
+This module provides a class, PygameRecord, which can be used to record Pygame
+animations and save them as GIF files. It captures frames from the Pygame display
+and saves them as images, then combines them into a GIF file.
+
+Credits:
+- Author: Ricardo Ribeiro Rodrigues
+- Date: 21/03/2024
+- source: https://gist.github.com/RicardoRibeiroRodrigues/9c40f36909112950860a410a565de667
+
+Usage:
+1. Initialize PygameRecord with a filename and desired frames per second (fps).
+2. Enter a Pygame event loop.
+3. Add frames to the recorder at desired intervals.
+4. When done recording, exit the Pygame event loop.
+5. The recorded GIF will be saved automatically.
+"""
 class PygameRecord:
-    """
-    PygameRecord - A utility for recording Pygame screens as GIFS.
-
-    This module provides a class, PygameRecord, which can be used to record Pygame
-    animations and save them as GIF files. It captures frames from the Pygame display
-    and saves them as images, then combines them into a GIF file.
-
-    Credits:
-    - Author: Ricardo Ribeiro Rodrigues
-    - Date: 21/03/2024
-    - source: https://gist.github.com/RicardoRibeiroRodrigues/9c40f36909112950860a410a565de667
-
-    Usage:
-    1. Initialize PygameRecord with a filename and desired frames per second (fps).
-    2. Enter a Pygame event loop.
-    3. Add frames to the recorder at desired intervals.
-    4. When done recording, exit the Pygame event loop.
-    5. The recorded GIF will be saved automatically.
-    """
-    
     def __init__(self, filename: str, fps: int):
         self.fps = fps
         self.filename = filename
